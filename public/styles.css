@@ -1,0 +1,116 @@
+/* Overall Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    color: #2f4f2f;
+    background-color: #f3f7f3;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styling */
+h1 {
+    color: #4CAF50;
+    margin-top: 20px;
+    font-size: 2.5em;
+    font-weight: 600;
+}
+
+/* Paragraph Styling */
+p {
+    color: #2f4f2f;
+    font-size: 1.2em;
+    margin: 5px auto 20px auto;
+    width: 80%;
+    max-width: 600px;
+}
+
+/* Map Placeholder Styling */
+#map {
+    width: 90%;
+    height: 400px;
+    margin: 20px auto;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    background-color: #e0e0e0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Form Container Styling */
+#request-form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Labels */
+label {
+    display: block;
+    margin: 10px 0 5px 0;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* Text Inputs */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+/* Button Styling */
+button {
+    margin-top: 15px;
+    padding: 12px 25px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Emissions Saved Styling */
+#emissions-saved {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #4CAF50;
+}
+
+/* About Us Section Styling */
+#about-us {
+    background-color: #f0f7f0;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    margin: 30px auto;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+#about-us h2 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+
+#about-us p {
+    color: #2f4f2f;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
