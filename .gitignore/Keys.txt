@@ -1,0 +1,5 @@
+add the following keys to .env for demonstration 11/2/2024
+
+
+MONGO_URI=mongodb+srv://MountainManager:FWkZdGWogQmChlEj@mountainrideshare.mod3s.mongodb.net/RideShareDB?retryWrites=true&w=majority&appName=MountainRideShare
+GOOGLE_MAPS_API_KEY=AIzaSyBiK95zDvFDnaFxOFI0MhD8EA00XcndDkQ

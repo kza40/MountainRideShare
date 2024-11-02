@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mountain Ride Share</title>
-    <link rel="stylesheet" href="css/styles.css">
-
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Mountain Ride Share</title>
+   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Mountain Ride Share</h1>
-    <p>Share a ride down the mountain and help reduce emissions! Enter your pickup and drop-off locations below to get started.</p>
-    
-    <div id="map">
-        <p style="color: #888; padding-top: 180px; font-size: 1.2em;">Map Placeholder</p>
-    </div>
+   <h1>Mountain Ride Share</h1>
+   <p>Share a ride down the mountain and help reduce emissions! Enter your pickup and drop-off locations below to get started.</p>
 
-    <div id="request-form">
-        <label for="pickup-location">Pickup Location:</label>
-        <input type="text" id="pickup-location" placeholder="e.g., University Entrance or Library">
+   <div id="map">
+       <p style="color: #888; padding-top: 180px; font-size: 1.2em;">Map Placeholder</p>
+   </div>
 
-        <label for="dropoff-location">Drop-off Location:</label>
-        <input type="text" id="dropoff-location" placeholder="e.g., Burquitlam Station or Production Way">
+   <div id="request-form">
+       <label for="pickup-location">Pickup Location:</label>
+       <input type="text" id="pickup-location" placeholder="e.g., University Entrance or Library">
 
-        <button onclick="requestRide()">Request a Ride</button>
-    </div>
+       <label for="dropoff-location">Drop-off Location:</label>
+       <input type="text" id="dropoff-location" placeholder="e.g., Burquitlam Station or Production Way">
 
-    <div id="emissions-saved">
-        <!-- Emissions saved will be displayed here after ride request -->
-    </div>
+       <button onclick="requestRide()">Request a Ride</button>
+   </div>
 
-    <!-- About Us Section -->
-    <section id="about-us">
-        <h2>About Us</h2>
-        <p>We started Mountain Ride Share with a simple goal: to take some of the load off our local transportation system and give back to the environment. By sharing rides, we’re making commutes easier, helping people connect, and reducing our collective carbon footprint. Join us on this journey towards a cleaner, greener way to travel!</p>
-    </section>
+   <div id="emissions-saved">
+   </div>
 
-    <script src="js/script.js"></script>
+   <section id="about-us">
+      <h2>About Us</h2>
+      <p>We started Mountain Ride Share with a simple goal: to take some of the load off our local transportation system and give back to the environment. By sharing rides, we’re making commutes easier, helping people connect, and reducing our collective carbon footprint. Join us on this journey towards a cleaner, greener way to travel!</p>
+   </section>
+
+   <footer>
+      <p class="trademark">&copy; Made by Kiarash Zamani</p>
+   </footer>
+
+   <script src="js/script.js"></script>
 </body>
 </html>

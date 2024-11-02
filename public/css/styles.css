@@ -1,4 +1,3 @@
-/* Overall Page Styling */
 body {
     font-family: Arial, sans-serif;
     color: #2f4f2f;
@@ -8,7 +7,6 @@ body {
     padding: 0;
 }
 
-/* Header Styling */
 h1 {
     color: #4CAF50;
     margin-top: 20px;
@@ -16,7 +14,7 @@ h1 {
     font-weight: 600;
 }
 
-/* Paragraph Styling */
+
 p {
     color: #2f4f2f;
     font-size: 1.2em;
@@ -25,7 +23,7 @@ p {
     max-width: 600px;
 }
 
-/* Map Placeholder Styling */
+
 #map {
     width: 90%;
     height: 400px;
@@ -37,7 +35,7 @@ p {
     text-align: center;
 }
 
-/* Form Container Styling */
+
 #request-form {
     background-color: #ffffff;
     border-radius: 8px;
@@ -48,7 +46,7 @@ p {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Form Labels */
+
 label {
     display: block;
     margin: 10px 0 5px 0;
@@ -56,7 +54,7 @@ label {
     font-weight: bold;
 }
 
-/* Text Inputs */
+
 input[type="text"] {
     width: 100%;
     padding: 10px;
@@ -84,7 +82,7 @@ button:hover {
     background-color: #45a049;
 }
 
-/* Emissions Saved Styling */
+
 #emissions-saved {
     margin-top: 20px;
     font-weight: bold;
@@ -92,7 +90,7 @@ button:hover {
     color: #4CAF50;
 }
 
-/* About Us Section Styling */
+
 #about-us {
     background-color: #f0f7f0;
     border-radius: 8px;
@@ -113,4 +111,10 @@ button:hover {
     color: #2f4f2f;
     font-size: 1.1em;
     line-height: 1.6;
+}
+
+footer .trademark {
+    font-size: 0.8em;
+    color: #2f4f2f;
+    margin-top: 20px;
 }
