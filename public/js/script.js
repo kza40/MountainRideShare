@@ -1,120 +1,135 @@
-let map // Global variable for map
-let pickupMarker // pickup marker
-let dropoffMarker // dropoff marker
+// Initialize map and markers
+let map 
+let pickupMarker 
+let dropoffMarker 
+let directionsService 
+let directionsRenderer 
 
-// Initializing google maps
+fetch('/config')
+    .then(response => response.json())
+    .then(config => {
+        const script = document.createElement('script')
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${config.googleMapsApiKey}&libraries=places&callback=initMap`
+        script.async = true
+        document.head.appendChild(script)
+    })
+    .catch(err => console.error('Failed to load Google Maps API key:', err))
+
 function initMap() {
-    
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 49.2791, lng: 122.9202 }, // SFU's burnaby campus coordinates
-        zoom: 14 
-    })
+   map = new google.maps.Map(document.getElementById("map"), {
+       center: { lat: 49.2791, lng: -122.9202 }, 
+       zoom: 15
+   })
 
-    // Getting the input fields for pickup and drop off locations
-    const inputPickup = document.getElementById("pickup-location")
-    const inputDropoff = document.getElementById("dropoff-location")
+   directionsService = new google.maps.DirectionsService()
+   directionsRenderer = new google.maps.DirectionsRenderer()
+   directionsRenderer.setMap(map)
 
-    const autocompletePickup = new google.maps.places.Autocomplete(inputPickup)
-    const autocompleteDropoff = new google.maps.places.Autocomplete(inputDropoff)
+   const transportationCenters = [
+       { lat: 49.27980296358191, lng: -122.92015590948907, title: "Transportation Center 1" },
+       { lat: 49.27849990416857, lng: -122.91279484768548, title: "Transportation Center 2" }
+   ]
 
-    // Waiting for a place to be selected
-    autocompletePickup.addListener("place_changed", () => {
-        const place = autocompletePickup.getPlace() 
-        if (place.geometry && place.geometry.location) {
-           
-            if (pickupMarker) {
-                pickupMarker.setMap(null)
-            }
+   transportationCenters.forEach(center => {
+       new google.maps.Marker({
+           position: { lat: center.lat, lng: center.lng },
+           map: map,
+           title: center.title,
+           icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+       })
+   })
 
-            
-            pickupMarker = new google.maps.Marker({
-                position: place.geometry.location,
-                map: map,
-                title: "Pickup Location",
-                icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
-            })
+   const inputPickup = document.getElementById("pickup-location")
+   const inputDropoff = document.getElementById("dropoff-location")
 
-            map.panTo(place.geometry.location) 
-        }
-    })
+   const autocompletePickup = new google.maps.places.Autocomplete(inputPickup)
+   const autocompleteDropoff = new google.maps.places.Autocomplete(inputDropoff)
 
-    // Adjusting dropoff location
-    autocompleteDropoff.addListener("place_changed", () => {
-        const place = autocompleteDropoff.getPlace() 
-        if (place.geometry && place.geometry.location) {
-           
-            if (dropoffMarker) {
-                dropoffMarker.setMap(null)
-            }
+   autocompletePickup.addListener("place_changed", () => {
+       const place = autocompletePickup.getPlace()
+       if (place.geometry && place.geometry.location) {
+           if (pickupMarker) pickupMarker.setMap(null)
 
-            
-            dropoffMarker = new google.maps.Marker({
-                position: place.geometry.location,
-                map: map,
-                title: "Dropoff Location",
-                icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" 
-            })
+           pickupMarker = new google.maps.Marker({
+               position: place.geometry.location,
+               map: map,
+               title: "Pickup Location",
+               icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+           })
+           map.panTo(place.geometry.location)
+       }
+   })
 
-            map.panTo(place.geometry.location) 
-        }
-    })
+   autocompleteDropoff.addListener("place_changed", () => {
+       const place = autocompleteDropoff.getPlace()
+       if (place.geometry && place.geometry.location) {
+           if (dropoffMarker) dropoffMarker.setMap(null)
+
+           dropoffMarker = new google.maps.Marker({
+               position: place.geometry.location,
+               map: map,
+               title: "Dropoff Location",
+               icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+           })
+           map.panTo(place.geometry.location)
+       }
+   })
 }
 
-// Function to request a ride
 function requestRide() {
     const pickupLocation = document.getElementById("pickup-location").value
     const dropoffLocation = document.getElementById("dropoff-location").value
 
-      // Simulate saving emissions with placeholder data
-      document.getElementById("emissions-saved").innerText = `Emissions saved: ${Math.random().toFixed(2) * 100} g CO₂`;
-      console.log("Request Ride clicked:", pickupLocation, dropoffLocation);
-    // // Using google.maps to get the exact coordinates
-    // const geocoder = new google.maps.Geocoder();
+    if (pickupLocation && dropoffLocation) {
+        directionsService.route(
+            {
+                origin: pickupLocation,
+                destination: dropoffLocation,
+                travelMode: 'DRIVING',
+            },
+            (response, status) => {
+                if (status === 'OK') {
+                    const pickupLatLng = response.routes[0].legs[0].start_location
+                    const dropoffLatLng = response.routes[0].legs[0].end_location
 
-    // Promise.all([
-    //     geocodeLocation(geocoder, pickupLocation),
-    //     geocodeLocation(geocoder, dropoffLocation)
-    // ]).then(([pickupLatLng, dropoffLatLng]) => {
-    //     calculateDistanceAndEmissions(pickupLatLng, dropoffLatLng)
-    // }).catch(error => console.error('Geocoding error:', error))
-}
+                    if (!isLocationInBC(pickupLatLng) || !isLocationInBC(dropoffLatLng)) {
+                        alert('One or both locations are outside of British Columbia. Enter valid locations within BC.')
+                        return
+                    }
 
-// Helper function to get the exact coordinates
-function geocodeLocation(geocoder, address) {
-    return new Promise((resolve, reject) => {
-        geocoder.geocode({ address }, (results, status) => {
-            if (status === 'OK') {
-                resolve(results[0].geometry.location)
-            } else {
-                reject(status)
+                    directionsRenderer.setDirections(response)
+
+                    //calculating CO2 using this formula: Emissions saved=Distance (in km)×Emissions per km (g CO₂)
+                    const distanceMeters = response.routes[0].legs[0].distance.value
+                    const distanceKm = distanceMeters / 1000
+                    const emissionsPerKm = 121.5 
+                    const emissionsSaved = distanceKm * emissionsPerKm
+
+                    document.getElementById("emissions-saved").innerText = `Emissions saved: ${emissionsSaved.toFixed(2)} g CO₂`
+                    console.log("Request Ride clicked:", pickupLocation, dropoffLocation)
+                } else if (status === 'ZERO_RESULTS') {
+                    alert('Could not find a route for the entered locations. Check your input.')
+                } else {
+                    console.error('Directions request failed:', status)
+                    alert('Error occurred while processing your request.')
+                }
             }
-        })
-    })
+        )
+    } else {
+        alert("Enter both pickup and drop-off locations.")
+    }
 }
 
-// Calculating the emissions saving
-function calculateDistanceAndEmissions(pickupLatLng, dropoffLatLng) {
-    const service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix({
-        origins: [pickupLatLng],
-        destinations: [dropoffLatLng],
-        travelMode: 'DRIVING',
-    }, (response, status) => {
-        if (status === 'OK') {
-            const distanceMeters = response.rows[0].elements[0].distance.value; // done in meters
-            const distanceKm = distanceMeters / 1000; // Converting to kilometers
+function isLocationInBC(latLng) {
+    const bcBounds = {
+        north: 60.0,
+        south: 48.3,
+        west: -139.1,
+        east: -114.0
+    }
 
-            // Calculate estimated CO2 saving
-            const emissionsPerKm = 121.5; // grams CO2 per kilometer
-            const emissionsSaved = distanceKm * emissionsPerKm;
-
-            // Displaying the emissions saved to the user
-            document.getElementById("emissions-saved").innerText = `Emissions saved: ${emissionsSaved.toFixed(2)} g CO₂`;
-        } else {
-            console.error('Distance Matrix request failed:', status);
-        }
-    });
+    return latLng.lat() <= bcBounds.north && latLng.lat() >= bcBounds.south &&
+           latLng.lng() <= bcBounds.east && latLng.lng() >= bcBounds.west
 }
 
-// Making initMap accessible by Google Maps API
 window.initMap = initMap
