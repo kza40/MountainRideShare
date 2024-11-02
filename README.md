@@ -58,12 +58,12 @@ The server will start on http://localhost:3000.
 ### Demo
 ![LandingPage](https://github.com/user-attachments/assets/cb70ecfb-d23d-41c0-b676-427cae259148)
 
-**Landing Page
+Landing page
 
 
 
 ![RideRequested](https://github.com/user-attachments/assets/a8d3defa-ad9b-4f10-befc-f952891f4d43)
 
-**Ride Requested
+Ride Requested
 
 
