@@ -1,4 +1,6 @@
 const express = require('express')
+
+//initializign express router
 const router = express.Router()
 
 // Posting ride requests
