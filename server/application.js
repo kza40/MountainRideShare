@@ -11,9 +11,10 @@ const routes = require('./routes')
 const app = express()
 
 // using mongoose to connect to MongoDB + error handling
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.log(err))
+mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => console.log('MongoDB connected'))
+    .catch((err) => console.log(err))
 
 // giving user access to the frontend
 app.use(express.static(path.join(__dirname, '../public')))

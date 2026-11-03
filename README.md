@@ -1,4 +1,5 @@
 # Mountain Ride Share
+
 A web app enabling drivers to volunteer rides down the mountain, reducing transit load and environmental impact.
 
 ## Table of Contents
@@ -37,47 +38,44 @@ Follow these instructions to set up and run the project on your local machine.
 
 1. **Clone the repository**
 
-   ```bash
-   git clone https://github.com/kza40/MountainRideShare.git
-   cd MountainRideShare
-   ```
+    ```bash
+    git clone https://github.com/kza40/MountainRideShare.git
+    cd MountainRideShare
+    ```
 
 2. **Install dependencies**
 
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
 3. **Configure environment variables.** Copy the example file and fill in your own values:
 
-   ```bash
-   cp .env.example .env
-   ```
+    ```bash
+    cp .env.example .env
+    ```
 
-   ```bash
-   MONGO_URI=your_mongodb_connection_string
-   GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-   ```
+    ```bash
+    MONGO_URI=your_mongodb_connection_string
+    GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+    ```
 
-   `.env` is git-ignored, so keep real credentials out of version control.
+    `.env` is git-ignored, so keep real credentials out of version control.
 
 4. **Start the server**
 
-   ```bash
-   npm start
-   ```
+    ```bash
+    npm start
+    ```
 
-   The server starts on http://localhost:3000.
+    The server starts on http://localhost:3000.
 
 ### Demo
+
 ![LandingPage](https://github.com/user-attachments/assets/cb70ecfb-d23d-41c0-b676-427cae259148)
 
 Landing page
 
-
-
 ![RideRequested](https://github.com/user-attachments/assets/a8d3defa-ad9b-4f10-befc-f952891f4d43)
 
 Ride Requested
-
-
