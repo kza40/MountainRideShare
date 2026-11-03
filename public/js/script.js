@@ -10,6 +10,11 @@ const TRANSIT_STOPS = [
     { lat: 49.27849990416857, lng: -122.91279484768548, title: 'UniverCity High Street' },
 ]
 
+// Service area: pickups on Burnaby Mountain, drop-offs anywhere in Metro Vancouver
+const SFU_BURNABY = { lat: 49.2781, lng: -122.9199 }
+const PICKUP_RADIUS_KM = 2.5
+const METRO_VANCOUVER_BOUNDS = { north: 49.45, south: 49.0, west: -123.3, east: -122.4 }
+
 let map
 let directionsService
 let directionsRenderer
@@ -62,7 +67,11 @@ function initMap() {
 
 // Attach Places autocomplete to an input and keep a single marker per field.
 function setupAutocomplete(input, kind, title) {
-    const autocomplete = new google.maps.places.Autocomplete(input)
+    const autocomplete = new google.maps.places.Autocomplete(input, {
+        bounds: METRO_VANCOUVER_BOUNDS,
+        componentRestrictions: { country: 'ca' },
+        fields: ['geometry', 'name', 'formatted_address'],
+    })
 
     autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace()
@@ -106,11 +115,15 @@ function requestRide() {
             }
 
             const leg = response.routes[0].legs[0]
-            if (!isLocationInBC(leg.start_location) || !isLocationInBC(leg.end_location)) {
+            if (!isOnBurnabyMountain(leg.start_location)) {
                 showStatus(
-                    'One or both locations are outside British Columbia. Enter locations within BC.',
+                    `Pickups must be on Burnaby Mountain (within ${PICKUP_RADIUS_KM} km of SFU).`,
                     'error',
                 )
+                return
+            }
+            if (!isInMetroVancouver(leg.end_location)) {
+                showStatus('Drop-offs must be within Metro Vancouver.', 'error')
                 return
             }
 
@@ -125,14 +138,28 @@ function requestRide() {
     )
 }
 
-function isLocationInBC(latLng) {
-    const bcBounds = { north: 60.0, south: 48.3, west: -139.1, east: -114.0 }
+// Great-circle distance between two { lat, lng } points (haversine formula)
+function distanceKm(a, b) {
+    const toRad = (deg) => (deg * Math.PI) / 180
+    const dLat = toRad(b.lat - a.lat)
+    const dLng = toRad(b.lng - a.lng)
+    const h =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2
+    return 2 * 6371 * Math.asin(Math.sqrt(h))
+}
 
+function isOnBurnabyMountain(latLng) {
+    return distanceKm(SFU_BURNABY, { lat: latLng.lat(), lng: latLng.lng() }) <= PICKUP_RADIUS_KM
+}
+
+function isInMetroVancouver(latLng) {
+    const { north, south, west, east } = METRO_VANCOUVER_BOUNDS
     return (
-        latLng.lat() <= bcBounds.north &&
-        latLng.lat() >= bcBounds.south &&
-        latLng.lng() <= bcBounds.east &&
-        latLng.lng() >= bcBounds.west
+        latLng.lat() <= north &&
+        latLng.lat() >= south &&
+        latLng.lng() >= west &&
+        latLng.lng() <= east
     )
 }
 
