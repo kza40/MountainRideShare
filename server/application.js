@@ -1,36 +1,40 @@
-// loading the env file
 require('dotenv').config()
 
-//importing required modules
+const path = require('path')
 const express = require('express')
 const mongoose = require('mongoose')
-const path = require('path')
 const routes = require('./routes')
 
-// initializing express
+const PORT = process.env.PORT || 3000
+const { MONGO_URI, GOOGLE_MAPS_API_KEY } = process.env
+
 const app = express()
 
-// using mongoose to connect to MongoDB + error handling
-mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => console.log('MongoDB connected'))
-    .catch((err) => console.log(err))
+// The ride API is not implemented yet, so the server runs without a database
+// when MONGO_URI is unset instead of failing on startup.
+if (MONGO_URI) {
+    mongoose
+        .connect(MONGO_URI)
+        .then(() => console.log('MongoDB connected'))
+        .catch((err) => console.error('MongoDB connection failed:', err.message))
+} else {
+    console.warn('MONGO_URI is not set; starting without a database connection')
+}
 
-// giving user access to the frontend
 app.use(express.static(path.join(__dirname, '../public')))
-
-// JSON parsing
 app.use(express.json())
 
-// requesting googleMaps Api key from config
+// The Maps JavaScript API key is used in the browser, so it is public by design.
+// Restrict it to your domain (HTTP referrer restriction) in Google Cloud Console.
 app.get('/config', (req, res) => {
-    res.json({ googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY })
+    if (!GOOGLE_MAPS_API_KEY) {
+        return res.status(503).json({ error: 'GOOGLE_MAPS_API_KEY is not configured' })
+    }
+    res.json({ googleMapsApiKey: GOOGLE_MAPS_API_KEY })
 })
 
 app.use('/api', routes)
 
-// starting server
-const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+    console.log(`Server running on http://localhost:${PORT}`)
 })

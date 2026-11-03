@@ -1,18 +1,17 @@
 const express = require('express')
 
-//initializign express router
 const router = express.Router()
 
-// Posting ride requests
-router.post('/request-ride', (req, res) => {
-    // Placeholder for ride request code
-    res.json({ message: 'Ride requested!' })
-})
+// Planned ride-matching API (see Roadmap in README.md). These endpoints are
+// stubs and return 501 so clients cannot mistake them for working features.
+const notImplemented = (req, res) => {
+    res.status(501).json({ error: 'Not implemented yet' })
+}
 
-// Posting route for drivers that accept rides
-router.post('/accept-ride', (req, res) => {
-    // Placeholder for ride acceptance code
-    res.json({ message: 'Ride accepted!' })
-})
+// TODO: persist a ride request (pickup, drop-off, rider) to MongoDB
+router.post('/request-ride', notImplemented)
+
+// TODO: let a driver accept an open ride request
+router.post('/accept-ride', notImplemented)
 
 module.exports = router
