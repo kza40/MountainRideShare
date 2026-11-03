@@ -15,6 +15,10 @@ const SFU_BURNABY = { lat: 49.2781, lng: -122.9199 }
 const PICKUP_RADIUS_KM = 2.5
 const METRO_VANCOUVER_BOUNDS = { north: 49.45, south: 49.0, west: -123.3, east: -122.4 }
 
+// Assumed tailpipe emissions of an average passenger car, in grams of CO2 per km.
+// A rider who joins a driver already heading down avoids making this trip alone.
+const CAR_EMISSIONS_G_PER_KM = 121.5
+
 let map
 let directionsService
 let directionsRenderer
@@ -129,13 +133,22 @@ function requestRide() {
 
             directionsRenderer.setDirections(response)
 
-            // Emissions saved = distance (km) x emissions per km (g CO2)
-            const distanceKm = leg.distance.value / 1000
-            const emissionsPerKm = 121.5
-            const emissionsSaved = distanceKm * emissionsPerKm
-            showStatus(`Emissions saved: ${emissionsSaved.toFixed(2)} g CO₂`, 'success')
+            const tripKm = leg.distance.value / 1000
+            const co2Grams = estimateCo2AvoidedGrams(tripKm)
+            showStatus(
+                `Estimated CO₂ avoided vs. driving alone: ${formatCo2(co2Grams)} (${tripKm.toFixed(1)} km trip)`,
+                'success',
+            )
         },
     )
+}
+
+function estimateCo2AvoidedGrams(tripKm) {
+    return tripKm * CAR_EMISSIONS_G_PER_KM
+}
+
+function formatCo2(grams) {
+    return grams >= 1000 ? `${(grams / 1000).toFixed(2)} kg` : `${Math.round(grams)} g`
 }
 
 // Great-circle distance between two { lat, lng } points (haversine formula)
