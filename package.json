@@ -1,19 +1,42 @@
 {
-  "name": "ride-share",
-  "version": "1.0.0",
-  "description": "Volunteer ride-sharing web app for getting down the mountain",
-  "main": "Server/application.js",
-  "scripts": {
-    "start": "node Server/application.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "mongodb": "^6.10.0",
-    "mongoose": "^8.7.3"
-  }
+    "name": "mountain-ride-share",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Ride-share web app for getting down Burnaby Mountain: route planning and CO2 estimates with Google Maps, on an Express backend.",
+    "main": "server/application.js",
+    "scripts": {
+        "start": "node server/application.js",
+        "dev": "node --watch server/application.js",
+        "lint": "eslint .",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "engines": {
+        "node": ">=18.11"
+    },
+    "keywords": [
+        "rideshare",
+        "carpool",
+        "google-maps",
+        "express",
+        "nodejs",
+        "mongodb"
+    ],
+    "author": "Kiarash Zamani",
+    "license": "MIT",
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "express": "^4.21.1",
+        "mongoose": "^8.7.3"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.39.5",
+        "eslint": "^9.39.5",
+        "eslint-config-prettier": "^10.1.8",
+        "globals": "^17.14.0",
+        "prettier": "^3.9.10"
+    },
+    "overrides": {
+        "minimatch": "^11.0.1"
+    }
 }
