@@ -35,7 +35,7 @@ function initMap() {
             position: { lat: center.lat, lng: center.lng },
             map: map,
             title: center.title,
-            icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+            icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
         })
     })
 
@@ -54,7 +54,7 @@ function initMap() {
                 position: place.geometry.location,
                 map: map,
                 title: 'Pickup Location',
-                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                icon: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
             })
             map.panTo(place.geometry.location)
         }
@@ -69,7 +69,7 @@ function initMap() {
                 position: place.geometry.location,
                 map: map,
                 title: 'Dropoff Location',
-                icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
             })
             map.panTo(place.geometry.location)
         }
