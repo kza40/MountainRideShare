@@ -35,25 +35,39 @@ Follow these instructions to set up and run the project on your local machine.
 
 ## Installation
 
-1. **Clone the Repository**:
+1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/mountain-ride-share.git
-   cd mountain-ride-share
+   git clone https://github.com/kza40/MountainRideShare.git
+   cd MountainRideShare
+   ```
 
-2. **Install Dependencies**:
+2. **Install dependencies**
+
    ```bash
    npm install
+   ```
 
-3. **Configure Environment Variables**: Create a .env file in the root directory with the following variables:
+3. **Configure environment variables.** Copy the example file and fill in your own values:
+
+   ```bash
+   cp .env.example .env
+   ```
+
    ```bash
    MONGO_URI=your_mongodb_connection_string
    GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+   ```
 
-4. **Start the Server**:
+   `.env` is git-ignored, so keep real credentials out of version control.
+
+4. **Start the server**
+
    ```bash
-   node server/application.js
-The server will start on http://localhost:3000.
+   npm start
+   ```
+
+   The server starts on http://localhost:3000.
 
 ### Demo
 ![LandingPage](https://github.com/user-attachments/assets/cb70ecfb-d23d-41c0-b676-427cae259148)

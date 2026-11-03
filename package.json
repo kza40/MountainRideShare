@@ -1,9 +1,10 @@
 {
   "name": "ride-share",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Volunteer ride-sharing web app for getting down the mountain",
+  "main": "Server/application.js",
   "scripts": {
+    "start": "node Server/application.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
