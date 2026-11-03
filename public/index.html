@@ -14,7 +14,7 @@
         </p>
 
         <div id="map">
-            <p style="color: #888; padding-top: 180px; font-size: 1.2em">Map Placeholder</p>
+            <p class="map-placeholder">Loading map…</p>
         </div>
 
         <div id="request-form">
@@ -32,10 +32,10 @@
                 placeholder="e.g., Burquitlam Station or Production Way"
             />
 
-            <button onclick="requestRide()">Request a Ride</button>
+            <button type="button" id="request-ride">Request a Ride</button>
         </div>
 
-        <div id="emissions-saved"></div>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
 
         <section id="about-us">
             <h2>About Us</h2>

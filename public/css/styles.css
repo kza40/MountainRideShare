@@ -77,11 +77,25 @@ button:hover {
     background-color: #45a049;
 }
 
-#emissions-saved {
+.map-placeholder {
+    color: #888;
+    padding-top: 180px;
+    font-size: 1.2em;
+}
+
+.status {
+    min-height: 1.5em;
     margin-top: 20px;
     font-weight: bold;
     font-size: 1.2em;
+}
+
+.status--success {
     color: #4caf50;
+}
+
+.status--error {
+    color: #c62828;
 }
 
 #about-us {
